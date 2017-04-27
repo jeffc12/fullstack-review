@@ -3,6 +3,11 @@ mongoose.connect('mongodb://localhost/fetcher');
 
 var repoSchema = mongoose.Schema({
   // TODO: your schema here!
+  id: Number,
+  repoName: String,
+  size: String,
+  watchers: Number
+
 });
 
 var Repo = mongoose.model('Repo', repoSchema);
