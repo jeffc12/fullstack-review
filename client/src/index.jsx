@@ -10,25 +10,45 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
+  }
 
+  show () {
+    $.ajax({
+      type: 'GET',
+      url: '/repos',
+    })
+    .done(function(data) {
+
+       this.state.repos = data;
+       console.log('data saved', data);
+    })
+    .fail(function(err) {
+      console.error('failed',err);
+    })
   }
 
   search (term) {
+    var outsideMethods = this;
     console.log(`${term} was searched`);
     $.ajax({
       type: 'POST',
       url: '/repos/import',
-      dataType: 'json',
-      data: {username: term},
+      contentType: 'application/json',
+      data: JSON.stringify({username: term})
     })
-      .done(function(data) {
+    .done(function(data) {
+      outsideMethods.show();
         console.log('success', data);
       })
       .fail(function(err) {
         console.error('failed', err);
       })
-    // TODO
+
   }
+
+
+
+
 
   render () {
 

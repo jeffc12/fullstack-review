@@ -17,34 +17,51 @@ app.use(bodyParser.urlencoded({
 
 app.post('/repos/import', function (req, res) {
   // TODO
-  console.log('body',req.body.username);
+
 
   var gh = new GitHub({
     username: 'jeffc12',
     password: 'fee0e11dd69a9c420d59c599685084e42920a6bf'
   })
-  // unauthenticated client
-gh = gh.getUser(req.body.username);
+  gh = gh.getUser(req.body.username);
 
-gh.listRepos(function(err,data) {
+  gh.listRepos(function(err,data) {
 
   data.forEach(function(index) {
 
-    console.log('id',index.id);
-    console.log('name',index.name);
-    console.log('size',index.size);
-    console.log('watchers', index.watchers);
+    // console.log('id',index.id);
+    // console.log('name',index.name);
+    // console.log('size',index.size);
+    // console.log('watchers', index.watchers);
 
+    var uniquename = index.full_name.toString();
 
+    var newDoc = new Repo ({
+      uniqueName: uniquename,
+      id: index.owner.login,
+      repoName: index.name,
+      size: index.size,
+      watchers: index.watchers
+
+    })
+
+    newDoc.save();
   })
 
+  res.end();
 })
-
-});
 
 app.get('/repos', function (req, res) {
   // TODO
+  console.log(Repo.);
+
+
+
 });
+
+});
+
+
 
 var port = 1128;
 

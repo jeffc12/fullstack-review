@@ -3,10 +3,12 @@ mongoose.connect('mongodb://localhost/fetcher');
 
 var repoSchema = mongoose.Schema({
   // TODO: your schema here!
-  id: Number,
+  uniqueName: {type: String, unique: true},
+  id: String,
   repoName: String,
   size: String,
   watchers: Number
+
 
 });
 
