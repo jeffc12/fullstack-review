@@ -48,13 +48,25 @@ app.post('/repos/import', function (req, res) {
     newDoc.save();
   })
 
-  res.end();
+})
+
 })
 
 app.get('/repos', function (req, res) {
   // TODO
-  console.log(Repo.);
+  var memory = null;
+  Repo.find({}, function(err,data) {
 
+    if (err) {
+      console.log('GET SERVER DID NOT WORK');
+      throw err;
+    }
+
+    return res.json(data);
+
+  })
+  .limit(25)
+  .sort({watchers: -1});
 
 
 });
